@@ -1,0 +1,159 @@
+#include <iostream>
+#include<conio.h>
+#include<stdlib.h>
+using namespace std;
+void PrintMessage(string message, bool printTop = true, bool printBottom = true)
+{
+	if (printTop)
+	{
+		cout << "+--------------------+" << endl;
+		cout << "|";
+	}
+	else
+	{
+		cout << "|";
+	}
+	bool front = true;
+	for (size_t i = message.length(); i < 20; i++)
+	{
+		if (front)
+		{
+			message = " " + message;
+		}
+		else
+		{
+			message = message + " ";
+		}
+		front = !front;
+	}
+	cout << message.c_str();
+	if (printBottom)
+	{
+		cout << "|" << endl;
+		cout << "+--------------------+" << endl;
+
+	}
+	else
+	{
+		cout << "|" << endl;
+	}
+}
+	void DrawHangMan(int guessCout = 0)
+	{
+
+		if (guessCout >= 1)
+			PrintMessage("|", false, false);
+		else
+			PrintMessage("", false, false);
+		if (guessCout >= 2)
+			PrintMessage("|", false, false);
+		else
+			PrintMessage("", false, false);
+		if (guessCout >= 3)
+			PrintMessage("0", false, false);
+		else
+			PrintMessage("", false, false);
+		if (guessCout == 4)
+			PrintMessage("/", false, false);
+		if (guessCout == 5)
+			PrintMessage("/|", false, false);
+		if (guessCout >= 6)
+			PrintMessage("/|\\", false, false);
+		else
+			PrintMessage("", false, false);
+		if (guessCout >= 7)
+			PrintMessage("|", false, false);
+		else
+			PrintMessage("", false, false);
+		if (guessCout == 8)
+			PrintMessage("/", false, false);
+		if (guessCout >= 9)
+			PrintMessage("/ \\", false, false);
+		else
+			PrintMessage("", false, false);
+	}
+	void PrintLetters(string input, char from, char to)
+	{
+		string s;
+		 
+		for (int i = from; i <= to; i++) {
+			if (input.find(i) == string::npos)
+			{
+				s += i;
+				s += " ";
+			}
+		}
+		if (s == " ")
+		{
+
+
+			PrintMessage(s, false, false);
+		}
+	}
+	void PrintAvailableLetters(string taken){
+		PrintMessage("Avaible Letters");
+			PrintLetters(taken,'A','K');
+		     PrintLetters(taken, 'L', 'W');
+		      PrintLetters(taken, 'X', 'Z');
+		}
+	void PrintWordAndCheckWin(string word, string guessed)
+	{
+		bool won = true;
+		string s;
+		for (size_t i = 0; i < word.length; i++)
+		{
+			if (guessed.find(word[i]) == string::npos)
+			{
+			        won = false;
+					s == "_";
+			}
+			else
+			{
+				s = word[i];
+					s == " ";
+			}
+		}
+
+		PrintMessage(s, false);
+	
+	}
+	
+	int main()
+	{
+		string guesses = "KILLINDIA";
+
+		PrintMessage("Hang Man");
+		size_t bufferSize = 10;
+		DrawHangMan(9);
+		PrintAvailableLetters(guesses);
+		PrintMessage(" Guess Word ");
+		PrintWordAndCheckWin("SALMAN", guesses);
+		getchar();
+		return 0;
+	}
+
+	/*
+	+-------------------- +
+	|     Hang Man        |
+	+---------------------+
+	|        |            |
+	|        |            |
+	|        0            |
+	|       /|\           |
+	|        |            |
+	|       / \           |
+	|    +--------+       |
+	|    |        |       |
+	+---------------------+
+	|  Avaible Letters    |
+	+---------------------+
+	| A B C D E F G H J K |
+	| L M O P Q R S T U W |
+	|     X Y Z           |
+	+---------------------+
+	|     Guess Word      |
+	+---------------------+
+	|---------------------|
+	+---------------------+
+	>
+	*/
